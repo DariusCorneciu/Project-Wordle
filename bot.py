@@ -1,8 +1,7 @@
 import time
 import random
 import os
-from termcolor import colored,cprint #py -m pip install termcolor
-
+from termcolor import colored
 
 def alege_cuvant():
     f=open('cuvinte.in','r')
@@ -15,29 +14,19 @@ def alege_cuvant():
     g.close()
     return cu
 
-cuvant=alege_cuvant()
-
-
 def cuvant_comun():
-    #numarul de aparitii al unei litere
     f=open("cuvinte_posibile.in","r")
     counter=[0 for i in range(0,26)]
-
     for i in f:
         cuv=i
         for j in cuv:
             if 'A'<=j<='Z':
                 counter[ord(j)-ord('A')]+=1
-
     f.close()
-
-    nrlitere=sum(counter) #numarul de litere
-    #frecventa literei
+    nrlitere=sum(counter)
     frecventalit=[0 for i in range(0,26)]
     for i in range(len(counter)):
         frecventalit[i]=counter[i]/nrlitere
-
-    #cat de comun este un cuvant
     f=open("cuvinte_posibile.in","r")
     tot=[]
     scor=0.0
@@ -47,8 +36,6 @@ def cuvant_comun():
                 scor+=frecventalit[ord(j)-ord('A')]
         tot.append(scor)
         scor=0.0
-
-    #cel mai comun cuvant
     for i in range(len(tot)):
         if tot[i]==max(tot):
             return i
@@ -95,15 +82,11 @@ def formare_lista(ghicite,stiute,error):
                     ok+=1
         if ok>=len(stiute):
             c.append(lista[i])
-    
     lista=c
-    
-
     for i in range(len(lista)):
         if lista[i]==cuvantj:
             del lista[i]
             break
-    
     g=open('cuvinte_posibile.in','w')
     for i in lista:
         g.write(i)
@@ -119,34 +102,28 @@ def citeste():
     del cuvantj[-1]
     cuvantj=''.join(cuvantj)
     print("Cuvantul ales de bot este:",cuvantj)
-    #time.sleep(3)
+    time.sleep(3)
 
 cuvantj= "a"
-
-
 ghiceala=['_' for x in range(5)]
 afis=[]
 pont=[]
 nu=[]
 ok=0
 nr=0
-
 def joc():
     cuvant=alege_cuvant()
     cuvant=list(cuvant)
     del cuvant[-1]
-    print(cuvant)
     global cuvantj,ghiceala,afis,nr,ok,pont,nu
     nr=0
     while ok!=1:
         formare_lista(ghiceala,pont,nu)
         citeste()
-        
         nr+=1
         pont=[]
         nu=[]
         color=list(cuvantj)
-        
         cuvant=list(cuvant)
         for i in range(len(cuvantj)):
             for j in range(len(cuvant)):
@@ -169,37 +146,21 @@ def joc():
                     nu.extend(cuvantj[i])
             else:
                 ok=0
-
-        #os.system('cls')
+        os.system('cls')
         ghiceala=''.join(ghiceala)
         color=''.join(color)
         cuvant=''.join(cuvant)
         afis.append(color)
-        #cuvant=''.join(cuvant)
         if cuvant==ghiceala:
             ok=1
         else:
             ok=0
             ghiceala=list(ghiceala)
-
-            #print("Literele pe care le-ai ghicit sunt:",ghiceala)
             for i in range(len(afis)):
                 print(afis[i])
-            #print("Cuvantu scris de mine:",cuvantj)
-            #print("Litere care au aparut in cuvant, dar nu sunt pe pozitia buna:",pont)
-            #print("Literele care nu apar:",nu)
-            #time.sleep(1)
+            time.sleep(1)
     ok=0
     ghiceala=['_' for x in range(5)]
     afis=[]
-    #os.system('cls')
+    os.system('cls')
     print("Felicitari, ai ghicit cuvantul din",nr,"incercari, iar cuvantul era",cuvant,".")
-    
-    
-   
-
-f=open("cuvinte.in","r")
-cuv=f.readlines()
-medie=[]
-lista=[]
-
